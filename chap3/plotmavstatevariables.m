@@ -1,4 +1,4 @@
-function plotMAVStateVariables(uu)
+function plotmavstatevariables(uu)
 %
 % modified 12/11/2009 - RB
 

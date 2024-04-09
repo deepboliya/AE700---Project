@@ -1,4 +1,4 @@
-function drawSpacecraft(uu)
+function drawAircraft(uu)
 
     % process inputs to function
     pn       = uu(1);       % inertial North position     
