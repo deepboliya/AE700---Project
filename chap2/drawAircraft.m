@@ -33,7 +33,7 @@ function drawAircraft(uu)
         ylabel('North')
         zlabel('-Down')
         view(32,47)  % set the vieew angle for figure
-        axis([-10,10,-10,10,-10,10]);
+        axis([-200,200,-200,200,-200,200]);
         hold on
         
     % at every other time step, redraw base and rod

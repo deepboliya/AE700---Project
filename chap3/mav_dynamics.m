@@ -141,30 +141,35 @@ function sys=mdlDerivatives(t,x,uu, MAV)
     m     = uu(5);
     n     = uu(6);
     
-    pndot = 
+    DCM_in_quaternions = [(e0^2)-(e1^2)-(e2^2)-(e3^2), 2*(e1*e2-e0*e3), 2*(e0*e2+e1*e3); 2*(e1*e2+e0*e3), 1-2*(e1^2+e3^2), 2*(e2*e3-e0*e1); 2*(e1*e3-e0*e2), 2*(e0*e1+e2*e3), 1-2*(e1^2+e2^2)]; 
+
+    dir = [u, v, w]*transpose(DCM_in_quaternions);
+
+    pndot = dir(1);
+    pedot = dir(2);
+    pddot = dir(3);
+
+    udot = (r*v-q*w)+(fx/MAV.mass);
     
-    pedot = 
+    vdot = (p*w-r*u)+(fy/MAV.mass);
     
-    pddot = 
+    wdot = (q*u-p*v)+(fz/MAV.mass);
     
-    udot = 
-    
-    vdot = 
-    
-    wdot = 
        
-    e0dot = 
-    e1dot = 
-    e2dot = 
-    e3dot = 
+    e0dot = (-p*e1 - q*e2 -r*e3)/2;
+    e1dot = (p*e0 + r*e2 - q*e3)/2;
+    e2dot = (q*e0 - r*e1 + p*e3)/2;
+    e3dot = (r*e0 + q*e1 -p*e2)/2;
         
-    pdot = 
-    
-    qdot = 
-    rdot =
+    pdot =  MAV.Gamma1*p*q - MAV.Gamma2*q*r + MAV.Gamma3*ell + MAV.Gamma4*n;
+    qdot = MAV.Gamma5*p*r - MAV.Gamma6*(p^2-r^2) + (m/MAV.Jy);
+    rdot = MAV.Gamma7*p*q - MAV.Gamma1*q*r + MAV.Gamma4*ell + MAV.Gamma8*n;
         
 
 sys = [pndot; pedot; pddot; udot; vdot; wdot; e0dot; e1dot; e2dot; e3dot; pdot; qdot; rdot];
+% Define some variables
+% Print the variables in a single line using fprintf
+fprintf('pn = %d, pd = %d, pe = %d \n', pn, pd, pe);
 
 % end mdlDerivatives
 
@@ -176,7 +181,6 @@ sys = [pndot; pedot; pddot; udot; vdot; wdot; e0dot; e1dot; e2dot; e3dot; pdot; 
 %=============================================================================
 %
 function sys=mdlUpdate(t,x,u)
-
 sys = [];
 
 % end mdlUpdate
@@ -188,9 +192,14 @@ sys = [];
 %=============================================================================
 %
 function sys=mdlOutputs(t,x)
-    y = [...
-        ];
+    quat = [x(7);x(8);x(9);x(10)];
+    [phi, theta, psi] = Quaternion2Euler(quat);
+    
+   
+    y = [x(1); x(2); x(3); x(4); x(5); x(6); phi; theta; psi; x(11); x(12); x(13) ];
+
 sys = y;
+
 
 % end mdlOutputs
 
@@ -206,6 +215,7 @@ sys = y;
 function sys=mdlGetTimeOfNextVarHit(t,x,u)
 
 sampleTime = 1;    %  Example, set the next hit to be one second later.
+
 sys = t + sampleTime;
 
 % end mdlGetTimeOfNextVarHit
@@ -219,5 +229,6 @@ sys = t + sampleTime;
 function sys=mdlTerminate(t,x,u)
 
 sys = [];
+
 
 % end mdlTerminate
