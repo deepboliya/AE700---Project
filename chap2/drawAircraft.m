@@ -104,7 +104,7 @@ end
 % define spacecraft vertices and faces
 function [V,F,colors] = defineSpacecraftBody()
     % Define the vertices (physical location of vertices
-    V = [...
+    V = 10 * [...
         1    1    0;... % point 1
         1   -1    0;... % point 2
         -1   -1    0;... % point 3
