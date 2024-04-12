@@ -1,13 +1,13 @@
 % compute trim conditions using 'mavsim_chap5_trim.slx'
 % nominal airspeed P.Va0 specified above with aircraft parameters
 gamma = 0*pi/180;  % desired flight path angle (radians)
-R     = 10000000000;        % desired radius (m) - use (+) for right handed orbit, 
+R     = 1000;        % desired radius (m) - use (+) for right handed orbit, 
                             %                          (-) for left handed orbit
-Va = 25;
+Va = 10;
 
 
 % set initial conditions 
-x0 = 
+x0 = [0; 0; 0; Va; 0; 0; 0; gamma; 0; 0; 0; 0];
 % specify which states to hold equal to the initial conditions
 ix = [];
 
@@ -31,7 +31,7 @@ y0 = [...
 iy = [1,3];
 
 % define constant derivatives
-dx0 = 
+dx0 = [0; 0; -Va*sin(gamma); 0; 0; 0; 0; 0; Va/R; 0; 0; 0];
 
 if R~=Inf, dx0(9) = Va*cos(gamma)/R; end  % 9 - psidot
 % specify which derivaties to hold constant in trim algorithm
@@ -43,8 +43,8 @@ idx = [3; 4; 5; 6; 7; 8; 9; 10; 11; 12];
 % check to make sure that the linearization worked (should be small)
 norm(dx_trim(3:end)-dx0(3:end))
 
-% P.u_trim = u_trim;
-% P.x_trim = x_trim;
+ P.u_trim = u_trim;         %Parameters update
+ P.x_trim = x_trim;
 
 % set initial conditions to trim conditions
 % initial conditions

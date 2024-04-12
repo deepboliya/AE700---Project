@@ -106,14 +106,14 @@ end
 function [V,F,colors] = defineSpacecraftBody()
 
     wing_w = 2.9;
-    wing_l = 0.25;
+    wing_l = 0.19;
     fuse_w = 0.6;
     fuse_l2 = 0.6;
     fuse_l1 = 0.9;
     fuse_l3 = 2.0;
-    tailwing_l = 0.25;
+    tailwing_l = 0.15;
     tailwing_w = 1.4;
-    fuse_h = 0.5;
+    fuse_h = 0.7;
     tail_h = 0.8;
     % Define the vertices (physical location of vertices
     V = 100 * [...
@@ -125,14 +125,14 @@ function [V,F,colors] = defineSpacecraftBody()
         -fuse_l3   0   0;... % point 6
         0   -wing_w / 2   0;... % point 7
         0    wing_w / 2   0;... % point 8
-        -wing_l  wing_w / 2  0;... % point 9
-        -wing_l -wing_w / 2  0;... % point 10
+        -0.19  wing_w / 2  0;... % point 9
+        -0.19 -wing_w / 2  0;... % point 10
         (-fuse_l3+tailwing_l) tailwing_w / 2  0;... % point 11
         (-fuse_l3) tailwing_w / 2  0;... % point 12
         (-fuse_l3) -tailwing_w / 2  0;... % point 13
         (-fuse_l3+tailwing_l) -tailwing_w / 2  0;... % point 14
-        (-fuse_l3+tailwing_l) 0  0;... % point 15
-        (-fuse_l3)  0  -tail_h;... % point 16
+        (-fuse_l3+tailwing_l) -1.5  0;... % point 15
+        -1.5  1.5  0;... % point 16
     ];
 
     % define faces as a list of vertices numbered above
@@ -146,8 +146,8 @@ function [V,F,colors] = defineSpacecraftBody()
         3, 6, 2, 3;...  % fusetop
         2, 6, 5, 2;...  % fuseleft
         5, 6, 4, 5;...  % fusebottom
-        11, 12, 13, 14;... %tailwing
-        15, 6, 16, 15;...  % rudder
+        11, 12, 13, 14;...
+        % 3, 6, 2, 3;...  % wing
         % 2, 6, 5, 2;...  % wing
         % 7, 8, 9, 10;...
         ];
@@ -162,15 +162,13 @@ function [V,F,colors] = defineSpacecraftBody()
     colors = [...
         myred;...    % front
         mygreen;...  % back
-        myred;...   % right
-        mygreen;... % left
-        myblue;...   % top
-        myyellow;...    % front
-        mycyan;...  % back
-        myyellow;...   % right
-        mycyan;... 
         myblue;...   % right
-        myblue;... 
+        myyellow;... % left
+        mycyan;...   % top
+        myred;...    % front
+        mygreen;...  % back
+        myblue;...   % right
+        myyellow;... 
         % mycyan;...   % bottom
         ];
 end
