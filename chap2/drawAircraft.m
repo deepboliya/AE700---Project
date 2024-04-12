@@ -32,8 +32,8 @@ function drawAircraft(uu)
         xlabel('East')
         ylabel('North')
         zlabel('-Down')
-        view(32,47)  % set the vieew angle for figure
-        axis([-200,200,-200,200,-200,200]);
+        view(30,30)  % set the vieew angle for figure
+        axis([-2000,2000,-2000,2000,-2000,2000]);
         hold on
         
     % at every other time step, redraw base and rod
@@ -104,7 +104,7 @@ end
 % define spacecraft vertices and faces
 function [V,F,colors] = defineSpacecraftBody()
     % Define the vertices (physical location of vertices
-    V = 10 * [...
+    V = 100 * [...
         1    1    0;... % point 1
         1   -1    0;... % point 2
         -1   -1    0;... % point 3
