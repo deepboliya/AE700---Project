@@ -151,8 +151,7 @@ function delta_a = roll_with_aileron(phi_c, phi, p, AP)
 
     %MAKE INTEGRAL ERROR 0 IF WE WANT TO DO WITHOUT DISTURBANCE
 
-    % delta a max is 40 degrees and error max is assumed 5 degrees thus kp
-    % is 40/5 = 8
+    
 
     delta_a = AP.roll_kp*(phi_c-phi) - AP.roll_kd*p + AP.roll_ki*(error_integral);
     delta_a = sat(delta_a, 40*pi/180, -40*pi/180);
